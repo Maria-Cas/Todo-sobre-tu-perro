@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Todo sobre tu perro</title>
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            margin: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); 
+            gap: 20px; 
+        }
+        .card { 
+            border: 1px solid #ddd; 
+            padding: 15px; 
+            border-radius: 8px;
+            background-color: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            transition: transform 0.2s;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        img { 
+            max-width: 100%; 
+            height: auto; 
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+        form { 
+            margin: 20px 0;
+            text-align: center;
+        }
+        input[type="text"] {
+            padding: 10px;
+            width: 300px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-right: 10px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        h1, h2 {
+            color: #333;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Todo sobre tu perro</h1>
+        
+        <form action="/buscar" method="GET">
+            <input type="text" name="nombre" placeholder="Buscar raza...">
+            <button type="submit">Buscar</button>
+        </form>
+
+        <h2>Imágenes aleatorias</h2>
+        <div class="grid">
+            <% imagenesAleatorias.forEach(imagen => { %>
+                <div class="card">
+                    <img src="<%= imagen.url %>" alt="Perro">
+                </div>
+            <% }); %>
+        </div>
+
+        <h2>Todas las razas</h2>
+        <div class="grid">
+            <% razas.forEach(raza => { %>
+                <div class="card">
+                    <h3><%= raza.name %></h3>
+                    <p><strong>Temperamento:</strong> <%= raza.temperament || 'No disponible' %></p>
+                    <% if (raza.life_span) { %>
+                        <p><strong>Esperanza de vida:</strong> <%= raza.life_span %></p>
+                    <% } %>
+                </div>
+            <% }); %>
+        </div>
+    </div>
+</body>
+</html>
