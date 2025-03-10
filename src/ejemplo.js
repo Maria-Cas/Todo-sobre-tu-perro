@@ -1,7 +1,7 @@
 const DogAPI = require('./dogApi');
 
 // Crear una instancia de la API
-const dogApi = new DogAPI('TU_API_KEY'); // Reemplaza con tu API key
+const dogApi = new DogAPI('live_ObhKAQTiehStNYDlSLfGYeA4E31qnpEPZmEks4TgPD6IgdiyCs6MQCO1AIEZjQ02'); 
 
 async function ejemplos() {
     try {
