@@ -216,6 +216,25 @@ app.get('/razas', async (req, res) => {
         const response = await makeRequest('https://dog.ceo/api/breeds/list/all');
         const breeds = response.data.message;
         
+        // Obtener una imagen para cada raza
+        const breedsWithImages = await Promise.all(
+            Object.keys(breeds).map(async (breed) => {
+                try {
+                    const imageResponse = await makeRequest(`https://dog.ceo/api/breed/${breed}/images/random`);
+                    return {
+                        name: breed,
+                        image: imageResponse.data.message
+                    };
+                } catch (error) {
+                    console.error(`Error getting image for ${breed}:`, error.message);
+                    return {
+                        name: breed,
+                        image: 'https://via.placeholder.com/200x200?text=No+Image'
+                    };
+                }
+            })
+        );
+        
         const html = `
             <h1>Razas de perros</h1>
             <style>
@@ -240,6 +259,10 @@ app.get('/razas', async (req, res) => {
                     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
                     transition: transform 0.2s;
                     cursor: pointer;
+                    text-decoration: none;
+                    color: inherit;
+                    display: flex;
+                    flex-direction: column;
                 }
                 .breed-card:hover {
                     transform: translateY(-5px);
@@ -247,7 +270,15 @@ app.get('/razas', async (req, res) => {
                 .breed-name {
                     text-transform: capitalize;
                     color: #333;
-                    margin: 0;
+                    margin: 10px 0;
+                    text-align: center;
+                }
+                .breed-image {
+                    width: 100%;
+                    height: 200px;
+                    object-fit: cover;
+                    border-radius: 4px;
+                    margin-bottom: 10px;
                 }
                 .nav-links {
                     margin: 20px;
@@ -271,6 +302,12 @@ app.get('/razas', async (req, res) => {
                     border-radius: 4px;
                     font-size: 16px;
                 }
+                .loading {
+                    text-align: center;
+                    padding: 20px;
+                    font-size: 18px;
+                    color: #666;
+                }
             </style>
             <div class="nav-links">
                 <a href="/">Ver imagen aleatoria</a>
@@ -279,9 +316,10 @@ app.get('/razas', async (req, res) => {
                 <input type="text" id="searchInput" placeholder="Buscar raza..." oninput="filterBreeds(this.value)">
             </div>
             <div class="breeds-list" id="breedsList">
-                ${Object.keys(breeds).map(breed => `
-                    <a href="/raza/${breed}" class="breed-card">
-                        <h3 class="breed-name">${traducirRaza(breed)}</h3>
+                ${breedsWithImages.map(breed => `
+                    <a href="/raza/${breed.name}" class="breed-card">
+                        <img src="${breed.image}" alt="${traducirRaza(breed.name)}" class="breed-image" loading="lazy">
+                        <h3 class="breed-name">${traducirRaza(breed.name)}</h3>
                     </a>
                 `).join('')}
             </div>
@@ -299,6 +337,16 @@ app.get('/razas', async (req, res) => {
                         }
                     });
                 }
+
+                // Cargar imágenes de forma lazy
+                document.addEventListener('DOMContentLoaded', function() {
+                    if ('loading' in HTMLImageElement.prototype) {
+                        const images = document.querySelectorAll('img[loading="lazy"]');
+                        images.forEach(img => {
+                            img.src = img.src;
+                        });
+                    }
+                });
             </script>
         `;
 
