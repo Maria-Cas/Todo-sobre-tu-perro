@@ -2,9 +2,10 @@ const express = require('express');
 const axios = require('axios');
 const app = express();
 const puerto = 3000;
+const path = require('path');
 
 // Configuración básica
-app.use(express.static('public'));
+app.use(express.static(path.join(__dirname, '../public')));
 
 // Caché
 const CACHE_TIEMPO = 5 * 60 * 1000; // 5 minutos
@@ -78,71 +79,13 @@ function generarHTML(titulo, contenido) {
         <!DOCTYPE html>
         <html>
         <head>
-            <title>${titulo}</title>
-            <style>
-                body {
-                    font-family: Arial, sans-serif;
-                    max-width: 1200px;
-                    margin: 0 auto;
-                    padding: 20px;
-                    background: #f5f5f5;
-                }
-                .contenedor {
-                    background: white;
-                    padding: 20px;
-                    border-radius: 8px;
-                    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-                }
-                .cuadricula {
-                    display: grid;
-                    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-                    gap: 20px;
-                    margin: 20px 0;
-                }
-                .tarjeta {
-                    position: relative;
-                    overflow: hidden;
-                    border-radius: 8px;
-                    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-                }
-                .imagen {
-                    width: 100%;
-                    height: 300px;
-                    object-fit: cover;
-                }
-                .info {
-                    background: #fff3e0;
-                    padding: 20px;
-                    border-radius: 8px;
-                    margin: 20px 0;
-                    border-left: 4px solid #ff9800;
-                }
-                .info-origen {
-                    background: #e3f2fd;
-                    padding: 20px;
-                    border-radius: 8px;
-                    margin: 20px 0;
-                    border-left: 4px solid #2196f3;
-                }
-                .etiqueta {
-                    font-weight: bold;
-                    color: #333;
-                    display: block;
-                    margin-bottom: 5px;
-                }
-                nav {
-                    margin: 20px 0;
-                }
-                a {
-                    color: #0066cc;
-                    text-decoration: none;
-                }
-                a:hover {
-                    text-decoration: underline;
-                }
-            </style>
+            <title>${titulo} - Todo sobre tu perro</title>
+            <link rel="stylesheet" href="/styles/main.css">
         </head>
         <body>
+            <div class="header">
+                <h1>🐕 Todo sobre tu perro</h1>
+            </div>
             <div class="contenedor">
                 <nav>
                     <a href="/">Inicio</a> |
@@ -166,15 +109,13 @@ app.get('/', async (req, res) => {
         const raza = datos.message.split('/')[4];
         const info = obtenerInfoRaza(raza);
 
-        const html = generarHTML('Perro Aleatorio', `
-            <h1>Perro Aleatorio</h1>
-            <div class="tarjeta">
-                <img src="${datos.message}" alt="Perro" class="imagen">
-                <div class="tarjeta-contenido">
-                    <h3>${info.nombre}</h3>
-                    <p class="origen">Origen: ${info.origen}</p>
-                    <span class="ver-mas">Click para más información →</span>
-                </div>
+        const html = generarHTML('Inicio', `
+            <h2>Perro Aleatorio del Día</h2>
+            <img src="${datos.message}" alt="Perro" class="imagen-principal">
+            <div class="info">
+                <h3>${info.nombre}</h3>
+                <p><strong>Origen:</strong> ${info.origen}</p>
+                <p>${info.descripcion}</p>
             </div>
         `);
 
@@ -200,8 +141,7 @@ app.get('/razas', async (req, res) => {
                     const imagenData = await obtenerDatosAPI(`https://dog.ceo/api/breed/${raza}/images/random`);
                     const info = obtenerInfoRaza(raza);
                     return {
-                        nombre: info.nombre,
-                        origen: info.origen,
+                        nombre: info ? info.nombre : raza,
                         imagen: imagenData.message,
                         ruta: raza
                     };
@@ -209,7 +149,6 @@ app.get('/razas', async (req, res) => {
                     console.error(`Error al obtener imagen para ${raza}:`, error);
                     return {
                         nombre: raza,
-                        origen: "Origen desconocido",
                         imagen: 'https://via.placeholder.com/300x300?text=Imagen+No+Disponible',
                         ruta: raza
                     };
@@ -225,56 +164,14 @@ app.get('/razas', async (req, res) => {
                         <img src="${raza.imagen}" alt="${raza.nombre}" class="imagen" loading="lazy">
                         <div class="tarjeta-contenido">
                             <h3>${raza.nombre}</h3>
-                            <p class="origen">Origen: ${raza.origen}</p>
-                            <span class="ver-mas">Click para más información →</span>
                         </div>
                     </a>
                 `).join('')}
             </div>
         `);
 
-        const htmlConEstilos = html.replace('</style>', `
-                .tarjeta {
-                    position: relative;
-                    overflow: hidden;
-                    transition: transform 0.3s ease;
-                    text-decoration: none;
-                    color: inherit;
-                }
-                .tarjeta:hover {
-                    transform: translateY(-5px);
-                }
-                .tarjeta-contenido {
-                    position: absolute;
-                    bottom: 0;
-                    left: 0;
-                    right: 0;
-                    background: rgba(0, 0, 0, 0.8);
-                    color: white;
-                    padding: 15px;
-                    text-align: center;
-                }
-                .tarjeta h3 {
-                    margin: 0;
-                    font-size: 1.2em;
-                    color: #ffd700;
-                }
-                .origen {
-                    font-size: 0.9em;
-                    margin: 5px 0;
-                    color: #fff;
-                }
-                .ver-mas {
-                    display: block;
-                    font-size: 0.9em;
-                    margin-top: 5px;
-                    color: #90caf9;
-                }
-            </style>
-        `);
-
-        cache.razas = { data: htmlConEstilos, tiempo: Date.now() };
-        res.send(htmlConEstilos);
+        cache.razas = { data: html, tiempo: Date.now() };
+        res.send(html);
     } catch (error) {
         console.error('Error:', error);
         res.status(500).send('Error al cargar las razas');
@@ -284,33 +181,53 @@ app.get('/razas', async (req, res) => {
 app.get('/raza/:nombre', async (req, res) => {
     try {
         const raza = req.params.nombre;
-        const info = obtenerInfoRaza(raza);
         const datos = await obtenerDatosAPI(`https://dog.ceo/api/breed/${raza}/images`);
-        const imagenes = datos.message.slice(0, 4);
+        const imagenes = datos.message;
+        const imagenPrincipal = imagenes[0];
+        const imagenesGaleria = imagenes.slice(1, 4);
+        const info = obtenerInfoRaza(raza) || {
+            nombre: raza,
+            origen: "Origen desconocido",
+            descripcion: "Información no disponible",
+            infoOrigen: "Información no disponible"
+        };
 
         const html = generarHTML(`Raza: ${info.nombre}`, `
-            <h1>${info.nombre}</h1>
-            
-            <div class="info">
-                <span class="etiqueta">Descripción:</span>
-                <p>${info.descripcion}</p>
-            </div>
+            <div class="detalle-raza">
+                <h1>${info.nombre}</h1>
+                
+                <div class="info-principal">
+                    <div class="imagen-principal-container">
+                        <img src="${imagenPrincipal}" alt="${info.nombre}" class="imagen-principal">
+                    </div>
+                    <div class="info-contenido">
+                        <div class="info">
+                            <h2>Descripción</h2>
+                            <p>${info.descripcion}</p>
+                        </div>
 
-            <div class="info-origen">
-                <span class="etiqueta">Origen: ${info.origen}</span>
-                <p>${info.infoOrigen}</p>
-            </div>
+                        <div class="info-origen">
+                            <h2>Origen</h2>
+                            <p><strong>${info.origen}</strong></p>
+                            <p>${info.infoOrigen}</p>
+                        </div>
+                    </div>
+                </div>
 
-            <h2>Galería de Imágenes</h2>
-            <div class="cuadricula">
-                ${imagenes.map(img => `
-                    <img src="${img}" alt="${info.nombre}" class="imagen">
-                `).join('')}
+                <h2>Más fotos</h2>
+                <div class="galeria-imagenes">
+                    ${imagenesGaleria.map(img => `
+                        <div class="imagen-contenedor">
+                            <img src="${img}" alt="${info.nombre}" class="imagen-galeria">
+                        </div>
+                    `).join('')}
+                </div>
             </div>
         `);
 
         res.send(html);
     } catch (error) {
+        console.error('Error:', error);
         res.status(500).send('Error al cargar la raza');
     }
 });
