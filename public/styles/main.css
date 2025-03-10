@@ -93,6 +93,7 @@ nav a:hover {
     margin: 0;
     color: white;
     font-size: 1.2em;
+    text-transform: uppercase;
 }
 
 /* Página de detalles */
@@ -105,6 +106,8 @@ nav a:hover {
     text-align: center;
     color: #2196f3;
     margin-bottom: 30px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
 /* Sección principal de información */
@@ -168,6 +171,26 @@ nav a:hover {
     line-height: 1.6;
 }
 
+/* Sección de esperanza de vida */
+.esperanza-vida {
+    margin-top: 20px;
+    padding: 15px;
+    background: #e8f5e9;
+    border-radius: 8px;
+    border-left: 4px solid #4caf50;
+}
+
+.esperanza-vida h3 {
+    color: #2e7d32;
+    margin: 0 0 10px 0;
+    font-size: 1.1em;
+}
+
+.esperanza-vida strong {
+    color: #1b5e20;
+    font-size: 1.2em;
+}
+
 /* Galería de imágenes */
 .galeria-imagenes {
     display: grid;
@@ -198,7 +221,95 @@ nav a:hover {
     object-fit: cover;
 }
 
-/* Responsive */
+/* Página de inicio */
+.pagina-inicio {
+    padding: 20px;
+}
+
+.hero-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    align-items: center;
+    padding: 40px;
+    background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+    border-radius: 20px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.hero-content {
+    padding: 20px;
+}
+
+.hero-content h1 {
+    font-size: 2.5em;
+    color: #1976d2;
+    margin-bottom: 20px;
+    line-height: 1.2;
+}
+
+.hero-content p {
+    font-size: 1.2em;
+    color: #546e7a;
+    margin-bottom: 30px;
+    line-height: 1.6;
+}
+
+.boton-principal {
+    display: inline-block;
+    padding: 15px 30px;
+    background-color: #2196f3;
+    color: white;
+    text-decoration: none;
+    border-radius: 50px;
+    font-size: 1.2em;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(33, 150, 243, 0.3);
+}
+
+.boton-principal:hover {
+    background-color: #1976d2;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(33, 150, 243, 0.4);
+}
+
+.hero-imagen {
+    position: relative;
+    width: 100%;
+    height: 400px;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+.imagen-hero {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.hero-imagen:hover .imagen-hero {
+    transform: scale(1.05);
+}
+
+@media (max-width: 768px) {
+    .hero-section {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+
+    .hero-content {
+        order: 1;
+    }
+
+    .hero-imagen {
+        order: 2;
+        height: 300px;
+    }
+}
+
 @media (max-width: 768px) {
     .info-principal {
         grid-template-columns: 1fr;
