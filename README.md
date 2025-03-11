@@ -2,90 +2,50 @@
 
 Una aplicación web que te permite explorar diferentes razas de perros, ver imágenes aleatorias y obtener información detallada sobre cada raza.
 
-## 📋 Características
+Este proyecto utiliza la [Dog CEO API](https://dog.ceo/dog-api/), que proporciona:
+- Imágenes aleatorias de perros
+- Lista completa de razas
+- Imágenes específicas por raza
+  para poder accder a ella he necesitado una API KEY
 
-- 🎲 Ver imágenes aleatorias de perros
-- 📱 Interfaz responsive y moderna
-- 🔍 Buscador de razas en tiempo real
-- 🌍 Nombres de razas en español
-- 📸 Galería de imágenes por raza
-- 🚀 Caché para mejor rendimiento
+Desarrollo Paso a Paso
 
-## 🛠️ Tecnologías Utilizadas
+Para comenzar el proyecto, seguimos estos pasos:
 
-- Instalado Node.js junto con express como framework del servidor
-- Dog CEO API que es una libreria para obtener información de las razas de perros
+Crear la estructura de directorios
 
-## 📦 Instalación
+  Inicializar el proyecto:
 
-1. Clona el repositorio:
-```bash
-git clone https://github.com/tu-usuario/Todo-sobre-tu-perro.git
-cd Todo-sobre-tu-perro
-```
+  Instalamos vite
+  
+  Crear el package.jason con el comando npm init
+  
+  Crear las rutas con node.js  para la página principal, la página de búsqueda de razas de perros y la página de detalles de cada raza de perro.
 
-2. Instala las dependencias:
-```bash
-npm install
-```
+  Crear archivos index , busqueda y detalle-raza que se usa para las diferentes acciones
+  
+  Crear un archivo server.js donde pondremos las constantes (objetos) necesarias para la aplicación
+  para ver la información de las razas de perros y la información mas detallada que aparece en la página como el origen, descripción....
 
-3. Inicia el servidor en modo desarrollo:
-```bash
-npm run dev
-```
+  Crear las funciones necesarias para obtener la información de las razas de perros y mostrarla en la página tambien en el server.js
+  Se crean promesas para las razas que tiene informacion y para las que no
+ 
 
-4. Abre tu navegador y visita:
-```
-http://localhost:3000
-```
+ Estructura del Proyecto
 
-## 🚀 Uso
-
-### Página Principal
-- Muestra una imagen aleatoria de un perro
-- Indica la raza del perro mostrado
-- Permite navegar a la lista de razas
-
-### Lista de Razas
-- Muestra todas las razas disponibles con imágenes
-- Búsqueda en tiempo real de razas
-- Cada tarjeta muestra:
-  - Imagen representativa de la raza
-  - Nombre de la raza en español
-
-### Detalles de Raza
-- Muestra información específica de la raza seleccionada
-- Galería de 4 imágenes aleatorias de la raza
-- Navegación fácil entre secciones
-
-## 📁 Estructura del Proyecto
-
-```
-Todo-sobre-tu-perro/
+  Todo-sobre-tu-perro/
 ├── src/
 │   └── server.js      # Servidor principal
 ├── package.json       # Dependencias y scripts
 ├── .env              # Variables de entorno
 └── README.md         # Documentación
-```
-
-## 🔧 Scripts Disponibles
-
-- `npm start`: Inicia el servidor en modo producción
-- `npm run dev`: Inicia el servidor en modo desarrollo con recarga automática
-
-## 📚 API Utilizada
-
-Este proyecto utiliza la [Dog CEO API](https://dog.ceo/dog-api/), que proporciona:
-- Imágenes aleatorias de perros
-- Lista completa de razas
-- Imágenes específicas por raza
 
 
 
+Para construir la aplicacion utilizo los siguientes comandos:
+npm run build
+npm run deploy
 
-
-
-
-
-Implemetantado  sistema de manejo de errores con un Middleware
+Para iniciarla
+npm start: Inicia el servidor en modo producción
+npm run dev: Inicia el servidor en modo desarrollo con recarga automática

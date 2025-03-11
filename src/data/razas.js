@@ -1,16 +1,19 @@
 export const razasMapping = {
-  "retriever-labrador": "labrador",
-  "shepherd-german": "german",
-  "retriever-golden": "golden",
-  bulldog: "bulldog",
-  poodle: "poodle",
-  beagle: "beagle",
-  husky: "husky",
-  rottweiler: "rottweiler",
-  boxer: "boxer",
-  chihuahua: "chihuahua",
-  doberman: "doberman",
-  corgi: "corgi",
+  // Razas principales
+  "labrador": { id: "labrador", esSubraza: false },
+  "germanshepherd": { id: "german", esSubraza: false },
+  "bulldog": { id: "bulldog", esSubraza: false },
+  "poodle": { id: "poodle", esSubraza: false },
+  "beagle": { id: "beagle", esSubraza: false },
+  "husky": { id: "husky", esSubraza: false },
+  "rottweiler": { id: "rottweiler", esSubraza: false },
+  "boxer": { id: "boxer", esSubraza: false },
+  "chihuahua": { id: "chihuahua", esSubraza: false },
+  "doberman": { id: "doberman", esSubraza: false },
+  "corgi": { id: "corgi", esSubraza: false },
+  
+  // Subrazas
+  "retriever/golden": { id: "golden", esSubraza: true, razaPrincipal: "retriever", subraza: "golden" }
 };
 
 export const infoRazas = {
