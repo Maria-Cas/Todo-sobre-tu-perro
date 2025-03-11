@@ -1,6 +1,6 @@
-const { razasMapping, infoRazas } = require("../data/razas");
+import { razasMapping, infoRazas } from "../data/razas.js";
 
-const obtenerInfoRaza = (raza) => {
+export const obtenerInfoRaza = (raza) => {
   const info = infoRazas[razasMapping[raza]] || infoRazas[raza];
   if (info) return info;
 
@@ -16,8 +16,4 @@ const obtenerInfoRaza = (raza) => {
     infoOrigen: "No tenemos información detallada sobre el origen de esta raza",
     esperanzaVida: "No disponible",
   };
-};
-
-module.exports = {
-  obtenerInfoRaza,
 };
