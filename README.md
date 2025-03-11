@@ -92,9 +92,7 @@ Este proyecto utiliza la [Dog CEO API](https://dog.ceo/dog-api/), que proporcion
 4. Haz Push a la rama (`git push origin feature/AmazingFeature`)
 5. Abre un Pull Request
 
-## 📄 Licencia
 
-Este proyecto está bajo la Licencia MIT. Ver el archivo `LICENSE` para más detalles.
 
 ## ✨ Mejoras Futuras
 
@@ -104,6 +102,5 @@ Este proyecto está bajo la Licencia MIT. Ver el archivo `LICENSE` para más det
 - [ ] Integrar información de cuidados y consejos
 - [ ] Añadir sección de comentarios y valoraciones
 
-## 📞 Contacto
 
-Si tienes preguntas o sugerencias, no dudes en abrir un issue o contactarme directamente.
+Implemetantado  sistema de manejo de errores con un Middleware
