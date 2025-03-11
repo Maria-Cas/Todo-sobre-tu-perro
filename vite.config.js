@@ -1,18 +1,19 @@
-import { defineConfig } from 'vite';
+import { defineConfig } from "vite";
 
 export default defineConfig({
-  root: './src/frontend',
+  base: "/Todo-sobre-tu-perro/",
+  root: "./src/frontend",
   build: {
-    outDir: '../../dist',
+    outDir: "../../dist",
     emptyOutDir: true,
   },
   server: {
     proxy: {
-      '/api': {
-        target: 'http://localhost:3000',
+      "/api": {
+        target: "http://localhost:3000",
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api/, '')
-      }
-    }
-  }
+        rewrite: (path) => path.replace(/^\/api/, ""),
+      },
+    },
+  },
 });

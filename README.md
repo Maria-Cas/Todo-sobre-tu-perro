@@ -9,15 +9,12 @@ Una aplicación web que te permite explorar diferentes razas de perros, ver imá
 - 🔍 Buscador de razas en tiempo real
 - 🌍 Nombres de razas en español
 - 📸 Galería de imágenes por raza
-- ⚡ Carga perezosa de imágenes
 - 🚀 Caché para mejor rendimiento
 
 ## 🛠️ Tecnologías Utilizadas
 
-- Node.js
-- Express
-- Axios
-- Dog CEO API
+- Instalado Node.js junto con express como framework del servidor
+- Dog CEO API que es una libreria para obtener información de las razas de perros
 
 ## 📦 Instalación
 
@@ -84,23 +81,11 @@ Este proyecto utiliza la [Dog CEO API](https://dog.ceo/dog-api/), que proporcion
 - Lista completa de razas
 - Imágenes específicas por raza
 
-## 🤝 Contribuir
-
-1. Haz un Fork del proyecto
-2. Crea una rama para tu característica (`git checkout -b feature/AmazingFeature`)
-3. Haz commit de tus cambios (`git commit -m 'Add some AmazingFeature'`)
-4. Haz Push a la rama (`git push origin feature/AmazingFeature`)
-5. Abre un Pull Request
 
 
 
-## ✨ Mejoras Futuras
 
-- [ ] Añadir información detallada sobre cada raza
-- [ ] Implementar sistema de favoritos
-- [ ] Añadir más filtros de búsqueda
-- [ ] Integrar información de cuidados y consejos
-- [ ] Añadir sección de comentarios y valoraciones
+
 
 
 Implemetantado  sistema de manejo de errores con un Middleware

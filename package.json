@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "type": "module",
   "description": "API client para TheDogAPI",
+  "homepage": "https://maria-cas.github.io/Todo-sobre-tu-perro",
   "scripts": {
     "start": "node src/server.js",
     "dev:server": "nodemon src/server.js",
